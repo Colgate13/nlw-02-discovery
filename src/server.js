@@ -1,32 +1,10 @@
-// Servidor
-const express = require('express')
-const server = express()
+const http = require("http");
 
-const  {
-    pageLanding,
-    pageStudy,
-    pageGiveClasses,
-    saveClasses
-} = require('./pages')
+const express = require("express");
+const app = express();
 
+app.get("/", function(req, res) {
+    res.send("<h1>Servidor rodando com ExpressJS</h1>");
+});
 
-//configurar nunjucks (template engine)
-const nunjucks = require('nunjucks')
-nunjucks.configure('src/views', {
-    express: server,
-    noCache: true,
-})
-
-// Inicio e configuração do servidor
-server
-// receber os dados do req.body
-.use(express.urlencoded({ extended: true }))
-// configurar arquivos estáticos (css, scripts, imagens)
-.use(express.static("public"))
-// rotas da aplicação
-.get("/", pageLanding)
-.get("/study", pageStudy)
-.get("/give-classes", pageGiveClasses)
-.post("/save-classes", saveClasses)
-// start do servidor
-.listen(21184)
+http.createServer(app).listen(21184, () => console.log("Servidor rodando local na porta 3000"));
